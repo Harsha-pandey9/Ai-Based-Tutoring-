@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_ENDPOINTS } from '../config/api';
 
 export default function About() {
   const [stats, setStats] = useState({ users: 0, logins: 0, activities: 0 });
@@ -7,7 +8,7 @@ export default function About() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/stats');
+        const res = await fetch(API_ENDPOINTS.STATS);
         if (!res.ok) throw new Error('Failed to fetch');
         const data = await res.json();
         setStats(data);

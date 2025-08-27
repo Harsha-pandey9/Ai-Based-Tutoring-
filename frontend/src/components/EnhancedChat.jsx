@@ -5,6 +5,7 @@ import { BsRobot, BsMarkdown } from "react-icons/bs";
 import { MdRefresh, MdCheck } from "react-icons/md";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { API_ENDPOINTS } from "../config/api";
 
 const EnhancedChat = ({ onClose }) => {
   const [prompt, setPrompt] = useState("");
@@ -92,7 +93,7 @@ What would you like to learn or work on today? 🌟`,
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/chat", {
+      const response = await fetch(API_ENDPOINTS.CHAT, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -147,7 +148,7 @@ What would you like to learn or work on today? 🌟`,
   const executeCode = async (code, language) => {
     setExecutingCode(true);
     try {
-      const response = await fetch("http://localhost:5000/api/execute", {
+      const response = await fetch(API_ENDPOINTS.EXECUTE, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

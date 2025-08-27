@@ -21,6 +21,7 @@ import {
 } from "react-icons/fa";
 import { useEffect } from "react";
 import { useAuth, useUser } from '@clerk/clerk-react';
+import { API_ENDPOINTS } from '../config/api';
 
 export default function Home() {
   const { isSignedIn } = useUser();
@@ -31,7 +32,7 @@ export default function Home() {
       if (isSignedIn) {
         try {
           const token = await getToken();
-          await fetch('http://localhost:5000/api/record_login', {
+          await fetch(API_ENDPOINTS.RECORD_LOGIN, {
             method: 'POST',
             headers: {
               Authorization: `Bearer ${token}`,

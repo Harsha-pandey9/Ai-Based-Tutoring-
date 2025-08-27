@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '@clerk/clerk-react';
+import { FaClock, FaCheckCircle, FaTimesCircle, FaTrophy, FaChartLine, FaBook, FaGraduationCap, FaRocket, FaLightbulb, FaUsers } from 'react-icons/fa';
+import { API_ENDPOINTS } from '../config/api';
 
 // Sample previous year question papers data
 const questionPapers = {
@@ -298,7 +300,7 @@ export default function TestSeries() {
   const fetchTestHistory = async () => {
     try {
       const token = await getToken();
-      const res = await fetch('http://localhost:5000/api/get_test_history', {
+      const res = await fetch(API_ENDPOINTS.GET_TEST_HISTORY, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (res.ok) {
@@ -313,7 +315,7 @@ export default function TestSeries() {
   const recordTest = async (testData) => {
     try {
       const token = await getToken();
-      await fetch('http://localhost:5000/api/record_test', {
+      await fetch(API_ENDPOINTS.RECORD_TEST, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

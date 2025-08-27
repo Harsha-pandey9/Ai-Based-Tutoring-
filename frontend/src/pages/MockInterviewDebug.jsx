@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
-import { useAuth } from '@clerk/clerk-react';
+import { useAuth, useUser } from '@clerk/clerk-react';
+import { SOCKET_CONFIG } from '../config/api';
 
 const MockInterviewDebug = () => {
   const { user } = useAuth();
@@ -20,7 +21,7 @@ const MockInterviewDebug = () => {
 
   useEffect(() => {
     // Create socket connection
-    const newSocket = io('http://localhost:5000', {
+    const newSocket = io(SOCKET_CONFIG.URL, {
       transports: ['websocket', 'polling'],
       upgrade: true,
     });

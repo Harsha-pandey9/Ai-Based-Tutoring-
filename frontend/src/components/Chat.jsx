@@ -3,6 +3,7 @@ import { useAuth } from "@clerk/clerk-react";
 import { FaUserCircle, FaPaperPlane, FaCode, FaCopy, FaPlay, FaStop, FaTrash, FaDownload, FaLightbulb } from "react-icons/fa";
 import { BsRobot, BsMarkdown } from "react-icons/bs";
 import { MdRefresh } from "react-icons/md";
+import { API_ENDPOINTS } from "../config/api";
 
 const Chat = ({ onClose }) => {
   const [prompt, setPrompt] = useState("");
@@ -32,7 +33,7 @@ const Chat = ({ onClose }) => {
 
     try {
       // Send conversation history for context
-      const response = await fetch("http://localhost:5000/api/chat", {
+      const response = await fetch(API_ENDPOINTS.CHAT, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

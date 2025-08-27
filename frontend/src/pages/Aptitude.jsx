@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '@clerk/clerk-react';
-import { categories, difficulties, questions } from '../aptitudeQuestions';
+import { FaClock, FaCheckCircle, FaTimesCircle, FaTrophy, FaUsers, FaMedal } from 'react-icons/fa';
+import aptitudeQuestions from '../aptitudeQuestions';
+import { API_ENDPOINTS } from '../config/api';
 
 export default function Aptitude() {
   const { getToken } = useAuth();
@@ -40,7 +42,7 @@ export default function Aptitude() {
 
   const fetchLeaderboard = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/get_aptitude_leaderboard');
+      const res = await fetch(API_ENDPOINTS.GET_APTITUDE_LEADERBOARD);
       if (!res.ok) throw new Error('Failed to fetch');
       const data = await res.json();
       setLeaderboard(data);
@@ -117,7 +119,7 @@ export default function Aptitude() {
     
     try {
       const token = await getToken();
-      const res = await fetch('http://localhost:5000/api/submit_aptitude_score', {
+      const res = await fetch(API_ENDPOINTS.SUBMIT_APTITUDE_SCORE, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

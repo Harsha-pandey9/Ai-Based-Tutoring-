@@ -17,8 +17,20 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 app = Flask(__name__)
-CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode="eventlet", transports=["websocket", "polling"])
+
+# Configure CORS for production
+CORS(app, 
+     origins=["*"],  # Allow all origins for now, restrict in production
+     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+     allow_headers=["Content-Type", "Authorization"],
+     supports_credentials=True)
+
+socketio = SocketIO(app, 
+                   cors_allowed_origins="*", 
+                   async_mode="eventlet", 
+                   transports=["websocket", "polling"],
+                   logger=True,
+                   engineio_logger=True)
   # Enable Socket.IO
 DB_PATH = 'progress.db'
 

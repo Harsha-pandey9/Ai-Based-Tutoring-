@@ -1,18 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Editor from '@monaco-editor/react';
-import { useAuth } from '@clerk/clerk-react';
-import { 
-  FaPlay, 
-  FaStop, 
-  FaSave, 
-  FaUpload, 
-  FaCog, 
-  FaExpand, 
-  FaCompress,
-  FaCode,
-  FaTerminal,
-  FaClock
-} from 'react-icons/fa';
+import React, { useState, useRef, useEffect } from 'react';
+import { Editor } from '@monaco-editor/react';
+import { FaPlay, FaStop, FaCopy, FaDownload, FaCode, FaTerminal, FaLightbulb, FaRocket } from 'react-icons/fa';
+import { BsCodeSlash } from 'react-icons/bs';
+import { API_ENDPOINTS } from '../config/api';
 
 const CodingPlayground = () => {
   const { getToken } = useAuth();
@@ -124,7 +114,7 @@ int main() {
     const startTime = Date.now();
 
     try {
-      const response = await fetch('http://localhost:5000/api/execute', {
+      const response = await fetch(API_ENDPOINTS.EXECUTE, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -153,7 +143,7 @@ int main() {
         setOutput(`❌ Error:\n${result.error}\n\n${result.output ? `Output:\n${result.output}` : ''}`);
       }
     } catch (error) {
-      setOutput(`🌐 Network Error: ${error.message}\n\nMake sure the backend server is running on http://localhost:5000`);
+      setOutput(`🌐 Network Error: ${error.message}\n\nMake sure the backend server is running and accessible`);
     } finally {
       setIsRunning(false);
     }

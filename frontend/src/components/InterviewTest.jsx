@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { io } from 'socket.io-client';
+import React, { useState } from 'react';
+import io from 'socket.io-client';
+import { SOCKET_CONFIG } from '../config/api';
 
 const InterviewTest = () => {
-  const [socket1] = useState(() => io('http://localhost:5000'));
-  const [socket2] = useState(() => io('http://localhost:5000'));
+  const [socket1] = useState(() => io(SOCKET_CONFIG.URL, SOCKET_CONFIG.OPTIONS));
+  const [socket2] = useState(() => io(SOCKET_CONFIG.URL, SOCKET_CONFIG.OPTIONS));
   
   const [user1Status, setUser1Status] = useState('disconnected');
   const [user2Status, setUser2Status] = useState('disconnected');

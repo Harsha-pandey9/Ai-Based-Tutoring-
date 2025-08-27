@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '@clerk/clerk-react';
+import { API_ENDPOINTS } from '../config/api';
 
 export default function QuantumNotes() {
   const { getToken } = useAuth();
@@ -10,7 +11,7 @@ export default function QuantumNotes() {
   const recordQuantumRead = async () => {
     try {
       const token = await getToken();
-      await fetch('http://localhost:5000/api/record_activity', {
+      await fetch(API_ENDPOINTS.RECORD_ACTIVITY, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '@clerk/clerk-react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import { io } from 'socket.io-client';
 import { Line, Doughnut, Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -15,7 +14,8 @@ import {
   ArcElement,
   BarElement,
 } from 'chart.js';
-import io from 'socket.io-client';
+import { FaChartLine, FaBook, FaVideo, FaAtom, FaTrophy, FaFire, FaCalendarAlt, FaUsers, FaRobot, FaLightbulb, FaGraduationCap, FaRocket } from 'react-icons/fa';
+import { SOCKET_CONFIG, API_ENDPOINTS } from '../config/api';
 
 ChartJS.register(
   CategoryScale,
@@ -44,7 +44,7 @@ export default function ProgressTracker() {
 
   useEffect(() => {
     // Initialize socket connection
-    const newSocket = io('http://localhost:5000');
+    const newSocket = io(SOCKET_CONFIG.URL, SOCKET_CONFIG.OPTIONS);
     setSocket(newSocket);
 
     // Listen for online users count
@@ -59,7 +59,7 @@ export default function ProgressTracker() {
         
         // Check if backend is running
         try {
-          const healthCheck = await fetch('http://localhost:5000/', {
+          const healthCheck = await fetch(API_ENDPOINTS.HEALTH, {
             method: 'GET',
             timeout: 5000
           });
@@ -77,7 +77,7 @@ export default function ProgressTracker() {
         if (!token) {
           console.log('No token, using test endpoint');
           // Use test endpoint if no authentication
-          res = await fetch('http://localhost:5000/api/test_progress', {
+          res = await fetch(API_ENDPOINTS.TEST_PROGRESS, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ export default function ProgressTracker() {
           });
         } else {
           // Use authenticated endpoint
-          res = await fetch('http://localhost:5000/api/get_progress', {
+          res = await fetch(API_ENDPOINTS.GET_PROGRESS, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${token}`,
@@ -162,7 +162,7 @@ export default function ProgressTracker() {
     const fetchDetailedProgress = async () => {
       try {
         const token = await getToken();
-        const res = await fetch('http://localhost:5000/api/get_detailed_progress', {
+        const res = await fetch(API_ENDPOINTS.GET_DETAILED_PROGRESS, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -253,7 +253,7 @@ export default function ProgressTracker() {
       try {
         const token = await getToken();
         const prompt = `Based on this student progress: PDF notes read: ${data.pdfCount} out of ${data.totalPdfsAvailable}, Videos watched: ${data.videoCount} out of ${data.totalVideosAvailable}, Quantum notes read: ${data.quantumCount} out of ${data.totalQuantumAvailable}, Tests attempted: ${data.testCount}, Aptitude tests: ${data.aptitudeTestsTaken}, Current streak: ${data.currentStreak} days, Total days visited: ${data.totalDaysVisited}. Provide personalized study recommendations.`;
-        const res = await fetch('http://localhost:5000/api/chat', {
+        const res = await fetch(API_ENDPOINTS.CHAT, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

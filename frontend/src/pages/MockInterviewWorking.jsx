@@ -1,28 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Editor from '@monaco-editor/react';
-import { useAuth } from '@clerk/clerk-react';
 import { io } from 'socket.io-client';
-import { 
-  FaUsers, 
-  FaMicrophone, 
-  FaMicrophoneSlash,
-  FaVolumeUp,
-  FaVolumeOff,
-  FaCode,
-  FaPlay,
-  FaClock,
-  FaExchangeAlt,
-  FaCheckCircle,
-  FaTimesCircle,
-  FaUserFriends,
-  FaComments,
-  FaPaperPlane,
-  FaLightbulb,
-  FaRocket,
-  FaPhone,
-  FaPhoneSlash,
-  FaRandom
-} from 'react-icons/fa';
+import { useAuth, useUser } from '@clerk/clerk-react';
+import { Editor } from '@monaco-editor/react';
+import { FaMicrophone, FaMicrophoneSlash, FaVolumeUp, FaVolumeMute, FaPlay, FaStop, FaUsers, FaCode, FaComments, FaRocket, FaLightbulb, FaCheckCircle, FaTimesCircle, FaClock, FaExchangeAlt } from 'react-icons/fa';
+import { SOCKET_CONFIG, API_ENDPOINTS } from '../config/api';
 
 const MockInterviewWorking = () => {
   const { user } = useAuth();
@@ -108,7 +89,7 @@ console.log(result);`,
 
   // Initialize Socket.IO connection
   useEffect(() => {
-    const newSocket = io('http://localhost:5000', {
+    const newSocket = io(SOCKET_CONFIG.URL, {
       transports: ['websocket', 'polling'],
       upgrade: true,
     });
@@ -339,7 +320,7 @@ console.log(result);`,
     setOutput('Running code...');
 
     try {
-      const response = await fetch('http://localhost:5000/api/execute', {
+      const response = await fetch(API_ENDPOINTS.EXECUTE, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
