@@ -37,16 +37,16 @@ This project provides **personalized education**, **mock interview practice**, *
 ![Homepage](frontend/assets/shot1.png)  
 
 ### 🔹 Coding Playgroung 
-![CodingPlayground](assets/shot2.png) 
+![CodingPlayground](frontend/assets/shot2.png) 
 
 ### 🔹 MOckInterview
-![MockInterview](assets/shot3.png) 
+![MockInterview](frontend/assets/shot3.png) 
 
 ### 🔹  Chatbot  
-![Chatbot](assets/shot5.png)  
+![Chatbot](frontend/assets/shot5.png)  
 
 ### 🔹 Progress Tracker  
-![Progress Tracker](assets/shot4.png)  
+![Progress Tracker](frontend/assets/shot4.png)  
 
 ---
 
