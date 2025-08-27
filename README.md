@@ -9,7 +9,7 @@
 ![MySQL](https://img.shields.io/badge/MySQL-Database-orange?logo=mysql&logoColor=white)  
 
 An intelligent tutoring system that helps students learn more effectively with **AI-powered tools**.  
-This project is built to provide **personalized education**, **mock interview practice**, **AI code editor**, and **progress tracking** — all in one place.  
+This project provides **personalized education**, **mock interview practice**, **AI code editor**, and **progress tracking** — all in one place.  
 
 ---
 
@@ -22,6 +22,31 @@ This project is built to provide **personalized education**, **mock interview pr
 - 🎤 **Mock Interview** – AI evaluates your answers with real-time feedback.  
 - 📊 **Progress Tracker** – See how much you’ve studied and what’s left.  
 - 📞 **Student Support** – Book one-to-one mentoring video calls.  
+
+---
+
+## 🌐 Live Demo  
+
+🔗 [Visit the Website](https://tutoringbyai.netlify.app/)  
+
+---
+
+## 🖼️ Screenshots  
+
+### 🔹 Homepage  
+![Homepage](assets/shot1.png)  
+
+### 🔹 Coding Playgroung 
+![CodingPlayground](assets/shot2.png) 
+
+### 🔹 MOckInterview
+![MockInterview](assets/shot3.png) 
+
+### 🔹  Chatbot  
+![Chatbot](assets/shot5.png)  
+
+### 🔹 Progress Tracker  
+![Progress Tracker](assets/shot4.png)  
 
 ---
 
@@ -38,6 +63,8 @@ This project is built to provide **personalized education**, **mock interview pr
 ---
 
 ## 📂 Project Structure  
+
+  
 
 AI-Based-Tutoring/
 │── frontend/ # React frontend
