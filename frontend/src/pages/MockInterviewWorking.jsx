@@ -2,7 +2,28 @@ import React, { useState, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
 import { useAuth, useUser } from '@clerk/clerk-react';
 import { Editor } from '@monaco-editor/react';
-import { FaMicrophone, FaMicrophoneSlash, FaVolumeUp, FaVolumeMute, FaPlay, FaStop, FaUsers, FaCode, FaComments, FaRocket, FaLightbulb, FaCheckCircle, FaTimesCircle, FaClock, FaExchangeAlt } from 'react-icons/fa';
+import { 
+  FaMicrophone, 
+  FaMicrophoneSlash, 
+  FaVolumeUp, 
+  FaVolumeOff,
+  FaVolumeMute, 
+  FaPlay, 
+  FaStop, 
+  FaUsers, 
+  FaCode, 
+  FaComments, 
+  FaRocket, 
+  FaLightbulb, 
+  FaCheckCircle, 
+  FaTimesCircle, 
+  FaClock, 
+  FaExchangeAlt,
+  FaUserFriends,
+  FaPaperPlane,
+  FaPhoneSlash,
+  FaRandom
+} from 'react-icons/fa';
 import { SOCKET_CONFIG, API_ENDPOINTS } from '../config/api';
 
 const MockInterviewWorking = () => {

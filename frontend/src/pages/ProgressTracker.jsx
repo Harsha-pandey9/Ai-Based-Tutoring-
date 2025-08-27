@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '@clerk/clerk-react';
 import { io } from 'socket.io-client';
 import { Line, Doughnut, Bar } from 'react-chartjs-2';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import {
   Chart as ChartJS,
   CategoryScale,

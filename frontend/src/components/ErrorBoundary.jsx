@@ -35,15 +35,31 @@ class ErrorBoundary extends React.Component {
               </p>
               
               {/* Error details for debugging */}
-              {process.env.NODE_ENV === 'development' && this.state.error && (
+              {this.state.error && (
                 <details className="text-left bg-gray-100 dark:bg-gray-700 p-4 rounded-lg mb-6">
                   <summary className="cursor-pointer font-semibold text-red-600 dark:text-red-400 mb-2">
-                    Error Details (Development Mode)
+                    Error Details (Click to expand)
                   </summary>
-                  <pre className="text-sm text-gray-800 dark:text-gray-200 overflow-auto">
-                    {this.state.error && this.state.error.toString()}
-                    {this.state.errorInfo.componentStack}
-                  </pre>
+                  <div className="mt-4 space-y-4">
+                    <div>
+                      <h4 className="font-semibold text-red-600 dark:text-red-400 mb-2">Error Message:</h4>
+                      <pre className="text-sm text-gray-800 dark:text-gray-200 overflow-auto bg-red-50 dark:bg-red-900 p-3 rounded">
+                        {this.state.error && this.state.error.toString()}
+                      </pre>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-red-600 dark:text-red-400 mb-2">Component Stack:</h4>
+                      <pre className="text-sm text-gray-800 dark:text-gray-200 overflow-auto bg-red-50 dark:bg-red-900 p-3 rounded">
+                        {this.state.errorInfo && this.state.errorInfo.componentStack}
+                      </pre>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-red-600 dark:text-red-400 mb-2">Stack Trace:</h4>
+                      <pre className="text-sm text-gray-800 dark:text-gray-200 overflow-auto bg-red-50 dark:bg-red-900 p-3 rounded max-h-64">
+                        {this.state.error && this.state.error.stack}
+                      </pre>
+                    </div>
+                  </div>
                 </details>
               )}
               

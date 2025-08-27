@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import FloatingChatButton from "./components/FloatingChatButton";
 import ErrorBoundary from "./components/ErrorBoundary";
 import LoadingSpinner from "./components/LoadingSpinner";
+import LazyComponentWrapper from "./components/LazyComponentWrapper";
 import DebugInfo from "./components/DebugInfo";
 import Aptitude from "./pages/Aptitude";
 import CodingPlayground from "./pages/CodingPlayground";
@@ -38,31 +39,127 @@ export default function App() {
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header />
       <main className="flex-1 p-0 bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
-        <ErrorBoundary>
-          <Suspense fallback={<LoadingSpinner message="Loading page..." />}>
-          <Routes>
-            <Route path="/test" element={<TestPage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/login" element={<SignIn routing="path" path="/login" />} />
-            <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-            <Route path="/chat" element={<ProtectedRoute><ChatPage /></ProtectedRoute>} />
-            <Route path="/games" element={<ProtectedRoute><Games /></ProtectedRoute>} />
-            <Route path="/games/minesweeper" element={<ProtectedRoute><Minesweeper /></ProtectedRoute>} />
-            <Route path="/games/pong" element={<ProtectedRoute><Pong /></ProtectedRoute>} />
-            <Route path="/games/whac-a-mole" element={<ProtectedRoute><WhacAMole /></ProtectedRoute>} />
-            <Route path="/progress" element={<ProtectedRoute><ProgressTracker /></ProtectedRoute>} />
-            <Route path="/test-series" element={<ProtectedRoute><TestSeries /></ProtectedRoute>} />
-            <Route path="/quantumseries" element={<ProtectedRoute><QuantumSeries /></ProtectedRoute>} />
-            <Route path="/pdfnotes" element={<ProtectedRoute><PdfNotes /></ProtectedRoute>} />
-            <Route path="/videolec" element={<ProtectedRoute><VideoLectures /></ProtectedRoute>} />
-            <Route path="/mock-interview" element={<ProtectedRoute><MockInterviewWorking /></ProtectedRoute>} />
-            <Route path="/mock-interview-debug" element={<ProtectedRoute><MockInterviewDebug /></ProtectedRoute>} />
-            <Route path="/interview-test" element={<ProtectedRoute><InterviewTest /></ProtectedRoute>} />
-            <Route path="/aptitude" element={<ProtectedRoute><Aptitude /></ProtectedRoute>} />
-            <Route path="/coding-playground" element={<ProtectedRoute><CodingPlayground /></ProtectedRoute>} />
-          </Routes>
-          </Suspense>
-        </ErrorBoundary>
+        <Routes>
+          <Route path="/test" element={<TestPage />} />
+          <Route path="/about" element={
+            <LazyComponentWrapper componentName="About">
+              <About />
+            </LazyComponentWrapper>
+          } />
+          <Route path="/login" element={<SignIn routing="path" path="/login" />} />
+          <Route path="/" element={
+            <ProtectedRoute>
+              <LazyComponentWrapper componentName="Home">
+                <Home />
+              </LazyComponentWrapper>
+            </ProtectedRoute>
+          } />
+          <Route path="/chat" element={
+            <ProtectedRoute>
+              <LazyComponentWrapper componentName="Chat">
+                <ChatPage />
+              </LazyComponentWrapper>
+            </ProtectedRoute>
+          } />
+          <Route path="/games" element={
+            <ProtectedRoute>
+              <LazyComponentWrapper componentName="Games">
+                <Games />
+              </LazyComponentWrapper>
+            </ProtectedRoute>
+          } />
+          <Route path="/games/minesweeper" element={
+            <ProtectedRoute>
+              <LazyComponentWrapper componentName="Minesweeper">
+                <Minesweeper />
+              </LazyComponentWrapper>
+            </ProtectedRoute>
+          } />
+          <Route path="/games/pong" element={
+            <ProtectedRoute>
+              <LazyComponentWrapper componentName="Pong">
+                <Pong />
+              </LazyComponentWrapper>
+            </ProtectedRoute>
+          } />
+          <Route path="/games/whac-a-mole" element={
+            <ProtectedRoute>
+              <LazyComponentWrapper componentName="Whac-a-Mole">
+                <WhacAMole />
+              </LazyComponentWrapper>
+            </ProtectedRoute>
+          } />
+          <Route path="/progress" element={
+            <ProtectedRoute>
+              <LazyComponentWrapper componentName="Progress Tracker">
+                <ProgressTracker />
+              </LazyComponentWrapper>
+            </ProtectedRoute>
+          } />
+          <Route path="/test-series" element={
+            <ProtectedRoute>
+              <LazyComponentWrapper componentName="Test Series">
+                <TestSeries />
+              </LazyComponentWrapper>
+            </ProtectedRoute>
+          } />
+          <Route path="/quantumseries" element={
+            <ProtectedRoute>
+              <LazyComponentWrapper componentName="Quantum Notes">
+                <QuantumSeries />
+              </LazyComponentWrapper>
+            </ProtectedRoute>
+          } />
+          <Route path="/pdfnotes" element={
+            <ProtectedRoute>
+              <LazyComponentWrapper componentName="PDF Notes">
+                <PdfNotes />
+              </LazyComponentWrapper>
+            </ProtectedRoute>
+          } />
+          <Route path="/videolec" element={
+            <ProtectedRoute>
+              <LazyComponentWrapper componentName="Video Lectures">
+                <VideoLectures />
+              </LazyComponentWrapper>
+            </ProtectedRoute>
+          } />
+          <Route path="/mock-interview" element={
+            <ProtectedRoute>
+              <LazyComponentWrapper componentName="Mock Interview">
+                <MockInterviewWorking />
+              </LazyComponentWrapper>
+            </ProtectedRoute>
+          } />
+          <Route path="/mock-interview-debug" element={
+            <ProtectedRoute>
+              <LazyComponentWrapper componentName="Mock Interview Debug">
+                <MockInterviewDebug />
+              </LazyComponentWrapper>
+            </ProtectedRoute>
+          } />
+          <Route path="/interview-test" element={
+            <ProtectedRoute>
+              <LazyComponentWrapper componentName="Interview Test">
+                <InterviewTest />
+              </LazyComponentWrapper>
+            </ProtectedRoute>
+          } />
+          <Route path="/aptitude" element={
+            <ProtectedRoute>
+              <LazyComponentWrapper componentName="Aptitude Test">
+                <Aptitude />
+              </LazyComponentWrapper>
+            </ProtectedRoute>
+          } />
+          <Route path="/coding-playground" element={
+            <ProtectedRoute>
+              <LazyComponentWrapper componentName="Coding Playground">
+                <CodingPlayground />
+              </LazyComponentWrapper>
+            </ProtectedRoute>
+          } />
+        </Routes>
       </main>
       <Footer className=" rounded-0 m-0" />
       <FloatingChatButton />
