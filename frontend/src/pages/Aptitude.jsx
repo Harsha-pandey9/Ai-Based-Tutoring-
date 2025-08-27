@@ -8,14 +8,7 @@ export default function Aptitude() {
   const { getToken } = useAuth();
   const [currentStep, setCurrentStep] = useState('category'); // 'category', 'subcategory', 'difficulty', 'test', 'result'
   
-  // Debug logging
-  useEffect(() => {
-    console.log('Aptitude component loaded');
-    console.log('Categories:', categories);
-    console.log('Difficulties:', difficulties);
-    console.log('Questions count:', questions.length);
-    console.log('API Endpoints:', API_ENDPOINTS);
-  }, []);
+
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState(null);
@@ -51,14 +44,11 @@ export default function Aptitude() {
 
   const fetchLeaderboard = async () => {
     try {
-      console.log('Fetching leaderboard from:', API_ENDPOINTS.GET_APTITUDE_LEADERBOARD);
       const res = await fetch(API_ENDPOINTS.GET_APTITUDE_LEADERBOARD);
       if (!res.ok) {
-        console.error('Leaderboard fetch failed:', res.status, res.statusText);
         throw new Error(`Failed to fetch leaderboard: ${res.status}`);
       }
       const data = await res.json();
-      console.log('Leaderboard data:', data);
       setLeaderboard(data);
     } catch (error) {
       console.error('Leaderboard error:', error);
@@ -135,7 +125,6 @@ export default function Aptitude() {
     
     try {
       const token = await getToken();
-      console.log('Submitting score:', newScore);
       const res = await fetch(API_ENDPOINTS.SUBMIT_APTITUDE_SCORE, {
         method: 'POST',
         headers: {
@@ -145,11 +134,9 @@ export default function Aptitude() {
         body: JSON.stringify({ score: newScore }),
       });
       if (!res.ok) {
-        console.error('Score submission failed:', res.status, res.statusText);
         throw new Error(`Failed to submit score: ${res.status}`);
       }
       const { rank } = await res.json();
-      console.log('Score submitted, rank:', rank);
       setUserRank(rank);
       fetchLeaderboard();
     } catch (error) {
