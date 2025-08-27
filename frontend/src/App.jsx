@@ -10,6 +10,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import LoadingSpinner from "./components/LoadingSpinner";
 import LazyComponentWrapper from "./components/LazyComponentWrapper";
 import DebugInfo from "./components/DebugInfo";
+import BackendTest from "./components/BackendTest";
 import Aptitude from "./pages/Aptitude";
 import CodingPlayground from "./pages/CodingPlayground";
 import TestPage from "./pages/TestPage";
@@ -164,6 +165,7 @@ export default function App() {
       <Footer className=" rounded-0 m-0" />
       <FloatingChatButton />
       <DebugInfo />
+      <BackendTest />
     </div>
   );
 }
