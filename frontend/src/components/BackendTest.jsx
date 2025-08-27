@@ -4,6 +4,12 @@ import { API_ENDPOINTS } from '../config/api';
 const BackendTest = () => {
   const [testResults, setTestResults] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [customBackendUrl, setCustomBackendUrl] = useState(() => {
+    return localStorage.getItem('backendTestUrl') || 'https://ai-based-tutoring.onrender.com';
+  });
+  const [useCustomUrl, setUseCustomUrl] = useState(() => {
+    return localStorage.getItem('useCustomBackendUrl') === 'true';
+  });
 
   const testEndpoint = async (name, url, options = {}) => {
     try {
@@ -48,33 +54,75 @@ const BackendTest = () => {
     }
   };
 
+  const getBaseUrl = () => {
+    return useCustomUrl ? customBackendUrl : (import.meta.env.VITE_API_URL || 'http://localhost:5000');
+  };
+
   const runAllTests = async () => {
     setIsLoading(true);
     setTestResults({});
     
+    const baseUrl = getBaseUrl();
+    
     // Test basic health check
-    await testEndpoint('Health Check', API_ENDPOINTS.HEALTH);
+    await testEndpoint('Health Check', baseUrl);
     await new Promise(resolve => setTimeout(resolve, 500));
     
     // Test API endpoint
-    await testEndpoint('API Test', `${API_ENDPOINTS.HEALTH}api/test`);
+    await testEndpoint('API Test', `${baseUrl}/api/test`);
     await new Promise(resolve => setTimeout(resolve, 500));
     
     // Test stats endpoint
-    await testEndpoint('Stats', API_ENDPOINTS.STATS);
+    await testEndpoint('Stats', `${baseUrl}/api/stats`);
     await new Promise(resolve => setTimeout(resolve, 500));
     
     // Test aptitude leaderboard
-    await testEndpoint('Aptitude Leaderboard', API_ENDPOINTS.GET_APTITUDE_LEADERBOARD);
+    await testEndpoint('Aptitude Leaderboard', `${baseUrl}/api/get_aptitude_leaderboard`);
     await new Promise(resolve => setTimeout(resolve, 500));
     
     // Test progress endpoint (no auth)
-    await testEndpoint('Test Progress', API_ENDPOINTS.TEST_PROGRESS);
+    await testEndpoint('Test Progress', `${baseUrl}/api/test_progress`);
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Test chat endpoint (no auth)
+    await testEndpoint('Chat Test', `${baseUrl}/api/chat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        prompt: 'Hello, this is a test message'
+      })
+    });
     
     setIsLoading(false);
   };
 
   const clearResults = () => {
+    setTestResults({});
+  };
+
+  const handleUrlChange = (e) => {
+    const newUrl = e.target.value;
+    setCustomBackendUrl(newUrl);
+    localStorage.setItem('backendTestUrl', newUrl);
+  };
+
+  const toggleCustomUrl = () => {
+    const newValue = !useCustomUrl;
+    setUseCustomUrl(newValue);
+    localStorage.setItem('useCustomBackendUrl', newValue.toString());
+    if (newValue) {
+      // When enabling custom URL, clear previous results
+      setTestResults({});
+    }
+  };
+
+  const setPresetUrl = (url) => {
+    setCustomBackendUrl(url);
+    localStorage.setItem('backendTestUrl', url);
+    setUseCustomUrl(true);
+    localStorage.setItem('useCustomBackendUrl', 'true');
     setTestResults({});
   };
 
@@ -87,11 +135,68 @@ const BackendTest = () => {
         
         <div className="p-4 border-t border-gray-200 dark:border-gray-700 max-h-96 overflow-y-auto">
           <div className="space-y-3">
+            {/* URL Configuration */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="useCustomUrl"
+                  checked={useCustomUrl}
+                  onChange={toggleCustomUrl}
+                  className="rounded"
+                />
+                <label htmlFor="useCustomUrl" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Use Custom URL
+                </label>
+              </div>
+              
+              {useCustomUrl && (
+                <div className="space-y-2">
+                  <div className="space-y-1">
+                    <label className="text-xs text-gray-600 dark:text-gray-400">Backend URL:</label>
+                    <input
+                      type="url"
+                      value={customBackendUrl}
+                      onChange={handleUrlChange}
+                      placeholder="https://your-backend.com"
+                      className="w-full px-2 py-1 text-xs border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                    />
+                  </div>
+                  
+                  {/* Quick Presets */}
+                  <div className="space-y-1">
+                    <label className="text-xs text-gray-600 dark:text-gray-400">Quick Presets:</label>
+                    <div className="flex flex-wrap gap-1">
+                      <button
+                        onClick={() => setPresetUrl('https://ai-based-tutoring.onrender.com')}
+                        className="px-2 py-1 text-xs bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded hover:bg-green-200 dark:hover:bg-green-800"
+                      >
+                        Render
+                      </button>
+                      <button
+                        onClick={() => setPresetUrl('http://localhost:5000')}
+                        className="px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded hover:bg-blue-200 dark:hover:bg-blue-800"
+                      >
+                        Local
+                      </button>
+                      <button
+                        onClick={() => setPresetUrl('http://localhost:3000')}
+                        className="px-2 py-1 text-xs bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded hover:bg-purple-200 dark:hover:bg-purple-800"
+                      >
+                        Dev
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            {/* Action Buttons */}
             <div className="flex gap-2">
               <button
                 onClick={runAllTests}
                 disabled={isLoading}
-                className="px-3 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 disabled:opacity-50"
+                className="px-3 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 disabled:opacity-50 flex-1"
               >
                 {isLoading ? 'Testing...' : 'Test Backend'}
               </button>
@@ -103,9 +208,11 @@ const BackendTest = () => {
               </button>
             </div>
             
-            <div className="text-xs text-gray-600 dark:text-gray-400">
-              <div><strong>Backend URL:</strong> {import.meta.env.VITE_API_URL || 'http://localhost:5000'}</div>
+            {/* Current Configuration */}
+            <div className="text-xs text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 p-2 rounded">
+              <div><strong>Current URL:</strong> {getBaseUrl()}</div>
               <div><strong>Environment:</strong> {import.meta.env.MODE}</div>
+              <div><strong>Source:</strong> {useCustomUrl ? 'Custom' : 'Environment'}</div>
             </div>
             
             {Object.keys(testResults).length > 0 && (
