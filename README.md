@@ -34,7 +34,7 @@ This project provides **personalized education**, **mock interview practice**, *
 ## 🖼️ Screenshots  
 
 ### 🔹 Homepage  
-![Homepage](assets/shot1.png)  
+![Homepage](frontend/assets/shot1.png)  
 
 ### 🔹 Coding Playgroung 
 ![CodingPlayground](assets/shot2.png) 
