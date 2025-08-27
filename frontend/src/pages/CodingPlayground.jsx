@@ -1,6 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Editor } from '@monaco-editor/react';
-import { FaPlay, FaStop, FaCopy, FaDownload, FaCode, FaTerminal, FaLightbulb, FaRocket } from 'react-icons/fa';
+import { useAuth } from '@clerk/clerk-react';
+import { 
+  FaPlay, 
+  FaStop, 
+  FaCopy, 
+  FaDownload, 
+  FaCode, 
+  FaTerminal, 
+  FaLightbulb, 
+  FaRocket,
+  FaSave,
+  FaUpload,
+  FaCog,
+  FaExpand,
+  FaCompress,
+  FaClock
+} from 'react-icons/fa';
 import { BsCodeSlash } from 'react-icons/bs';
 import { API_ENDPOINTS } from '../config/api';
 

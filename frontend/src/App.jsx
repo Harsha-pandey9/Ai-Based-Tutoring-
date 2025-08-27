@@ -6,8 +6,12 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 import FloatingChatButton from "./components/FloatingChatButton";
+import ErrorBoundary from "./components/ErrorBoundary";
+import LoadingSpinner from "./components/LoadingSpinner";
+import DebugInfo from "./components/DebugInfo";
 import Aptitude from "./pages/Aptitude";
 import CodingPlayground from "./pages/CodingPlayground";
+import TestPage from "./pages/TestPage";
 
 // Lazy-loaded Pages
 const Home = lazy(() => import("./pages/Home"));
@@ -34,8 +38,10 @@ export default function App() {
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header />
       <main className="flex-1 p-0 bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
-        <Suspense fallback={<div className="text-center py-10 text-gray-600">Loading...</div>}>
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingSpinner message="Loading page..." />}>
           <Routes>
+            <Route path="/test" element={<TestPage />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<SignIn routing="path" path="/login" />} />
             <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
@@ -55,10 +61,12 @@ export default function App() {
             <Route path="/aptitude" element={<ProtectedRoute><Aptitude /></ProtectedRoute>} />
             <Route path="/coding-playground" element={<ProtectedRoute><CodingPlayground /></ProtectedRoute>} />
           </Routes>
-        </Suspense>
+          </Suspense>
+        </ErrorBoundary>
       </main>
       <Footer className=" rounded-0 m-0" />
       <FloatingChatButton />
+      <DebugInfo />
     </div>
   );
 }
